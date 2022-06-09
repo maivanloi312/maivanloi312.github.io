@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/fragments/dashboardLayout.html}">
+    <head>
+
+    </head>
+      <body>
+        <section class="row" layout:fragment="content">
+          <div class="col-6 offset-3 mt-4">
+            <form action="/admin/dsdangky/saveOrUpdate" method="post" enctype="multipart/form-data" th:object="${dangky}">
+              <div class="card">
+                <div class="card-header">
+                  <h2 th:text="${dangky.isEdit? 'Sửa đăng ký':'Thêm đăng ký'}">Thêm đăng ký</h2>
+                </div>
+                <div class="card-body">
+                  <input type="hidden" th:field="*{isEdit}">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <label for="idLTC">Lớp tín chỉ: </label>
+                        <select class="form-control" name="idLTC" id="idLTC" th:field="*{idLTC}">
+                          <option th:each="item: ${dsloptinchi}" th:value="${item.idLTC}" th:text="${item.idLTC}" 
+                                  th:select="${item.idLTC == dangky.idLTC}">Lớp tín chỉ</option>
+                        </select>
+                        <small th:errors="*{idLTC}" id="lopTinChiHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="idSinhVien">Sinh viên: </label>
+                        <select class="form-control" name="idSinhVien" id="idSinhVien" th:field="*{idSinhVien}">
+                          <option th:each="item: ${dssinhvien}" th:value="${item.idSinhVien}" th:text="${item.ten}" 
+                                  th:select="${item.idSinhVien == dangky.idSinhVien}">Tên sinh viên</option>
+                        </select>
+                        <small th:errors="*{idSinhVien}" id="sinhVienHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="input-group form-group">
+                        <span class="input-group-text">Điểm chuyên cần:</span>
+                        <input type="text" name="diemcc" id="diemcc" th:field="*{diemcc}" class="form-control" placeholder="Điểm">
+                        <span class="input-group-text">điểm</span>
+                        <small th:errors="*{diemcc}" id="diemccHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="input-group form-group">
+                        <span class="input-group-text">Điểm giữa kì:</span>
+                        <input type="text" name="diemgk" id="diemgk" th:field="*{diemgk}" class="form-control" placeholder="Điểm">
+                        <span class="input-group-text">điểm</span>
+                        <small th:errors="*{diemgk}" id="diemgkHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="input-group form-group">
+                        <span class="input-group-text">Điểm cuối kì:</span>
+                        <input type="text" name="diemck" id="diemck" th:field="*{diemck}" class="form-control" placeholder="Điểm">
+                        <span class="input-group-text">điểm</span>
+                        <small th:errors="*{diemck}" id="diemckHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="huyDangKy">Trạng thái:</label>
+                        <select class="form-control" name="huyDangKy" id="huyDangKy" th:field="*{huyDangKy}">
+                          <option value="0">Mở</option>
+                          <option value="1">Hủy</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="card-footer text-muted">
+                  <button type="reset" class="btn btn-secondary"><i class="fas fa-backspace"></i> Đặt lại</button>
+                  <a th:href="@{/admin/dsdangky}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> Xem danh sách</a>
+                  <button class="btn btn-primary"><i class="fas fa-save"></i>
+                    <span th:if="${dangky.isEdit}"> Cập nhật</span>
+                    <span th:unless="${dangky.isEdit}"> Lưu</span>
+                  </button>
+              </div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </body>
+</html>

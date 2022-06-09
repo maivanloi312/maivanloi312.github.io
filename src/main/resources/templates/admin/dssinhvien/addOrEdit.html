@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/fragments/dashboardLayout.html}">
+    <head>
+
+    </head>
+      <body>
+        <section class="row" layout:fragment="content">
+          <div class="col-6 offset-3 mt-4">
+            <form action="/admin/dssinhvien/saveOrUpdate" method="post" th:object="${sinhvien}">
+              <div class="card">
+                  <div class="card-header">
+                    <h2 th:text="${sinhvien.isEdit? 'Sửa sinh viên':'Thêm sinh viên'}">Thêm sinh viên</h2>
+                  </div>
+                  <div class="card-body">
+                    <input type="hidden" th:field="*{isEdit}">
+                    <div class="form-group">
+                      <label for="idSinhVien">Mã sinh viên: </label>
+                      <input type="text" class="form-control" name="idSinhVien" id="idSinhVien" th:field="*{idSinhVien}" aria-describedby="giangVienHid" placeholder="Mã sinh viên">
+                      <small th:errors="*{idSinhVien}" id="giangVienHid" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="ho">Họ sinh viên: </label>
+                      <input type="text" class="form-control" name="name" id="ho" th:field="*{ho}" aria-describedby="nameHid" placeholder="Họ sinh viên">
+                      <small th:errors="*{ho}" id="hoHid" class="form-text text-muted">Họ sinh viên không được để trống</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="ten">Tên sinh viên: </label>
+                      <input type="text" class="form-control" name="name" id="ten" th:field="*{ten}" aria-describedby="nameHid" placeholder="Tên sinh viên">
+                      <small th:errors="*{ten}" id="tenHid" class="form-text text-muted">Tên sinh viên không được để trống</small>
+                    </div>
+                      <div class="form-group">
+                        <label for="phai">Giới tính:</label>
+                        <select class="form-control" name="phai" id="phai" th:field="*{phai}">
+                          <option value="0">Nam</option>
+                          <option value="1">Nữ</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="diaChi">Địa chỉ: </label>
+                        <input type="text" class="form-control" name="diaChi" id="diaChi" th:field="*{diaChi}" aria-describedby="diaChiHid" placeholder="Địa chỉ">
+                      </div>
+                      <div class="form-group">
+                        <label for="idLop">Mã lớp:</label>
+                        <select class="form-control" name="idLop" id="idLop" th:field="*{idLop}">
+                          <option th:each="item: ${dslop}" th:value="${item.idLop}" th:text="${item.tenLop}" 
+                                  th:select="${item.idLop == sinhvien.idLop}"> Tên lớp</option>
+                        </select>
+                        <small th:errors="*{idLop}" id="lopHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="daNghiHoc">Trạng thái:</label>
+                        <select class="form-control" name="daNghiHoc" id="daNghiHoc" th:field="*{daNghiHoc}">
+                          <option value="0">Đang học</option>
+                          <option value="1">Đã nghỉ</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="idTaiKhoan">Mã tài khoản:</label>
+                        <select class="form-control" name="idTaiKhoan" id="idTaiKhoan" th:field="*{idTaiKhoan}">
+                          <option th:each="item: ${dstaikhoan}" th:value="${item.idTaiKhoan}" th:text="${item.username}" 
+                                  th:select="${item.idTaiKhoan == sinhvien.idTaiKhoan}">Mã tài khoản</option>
+                        </select>
+                        <small th:errors="*{idTaiKhoan}" id="taikhoanHid" class="form-text text-muted"></small>
+                      </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="reset" class="btn btn-secondary"><i class="fas fa-backspace"></i> Đặt lại</button>
+                    <a th:href="@{/admin/dssinhvien}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> Xem danh sách</a>
+                    <button class="btn btn-primary"><i class="fas fa-save"></i>
+                      <span th:if="${sinhvien.isEdit}"> Cập nhật</span>
+                      <span th:unless="${sinhvien.isEdit}"> Lưu</span>
+                    </button>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </body>
+</html>

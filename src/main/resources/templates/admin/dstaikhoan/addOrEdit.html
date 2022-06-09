@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/fragments/dashboardLayout.html}">
+    <head>
+
+    </head>
+      <body>
+        <section class="row" layout:fragment="content">
+          <div class="col-6 offset-3 mt-4">
+            <form action="/admin/dstaikhoan/saveOrUpdate" method="post" th:object="${taikhoan}">
+              <div class="card">
+                  <div class="card-header">
+                    <h2 th:text="${taikhoan.isEdit? 'Sửa tài khoản':'Thêm tài khoản'}">Thêm tài khoản</h2>
+                  </div>
+                  <div class="card-body">
+                    <input type="hidden" th:field="*{isEdit}">
+                      <!-- <div class="form-group">
+                        <label for="idTaiKhoan">Mã tài khoản:</label>
+                        <input type="text" class="form-control" th:field="*{idTaiKhoan}" aria-describedby="taiKhoanHid" placeholder="Mã tài khoản được tạo tự động" readonly>
+                      </div> -->
+                      <div class="form-group">
+                        <label for="username">Tên tài khoản: </label>
+                        <input th:if="${taikhoan.isEdit}" type="text" class="form-control" th:field="*{username}" name="username" id="username" aria-describedby="usernameHid" placeholder="Tên tài khoản" readonly>
+                        <input th:unless="${taikhoan.isEdit}" type="text" class="form-control" th:field="*{username}" name="username" id="username" aria-describedby="usernameHid" placeholder="Tên tài khoản">
+                        <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" id="usernameHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="password">Mật khẩu: </label>
+                        <input type="password" class="form-control" name="password" id="password" th:field="*{password}" aria-describedby="passwordHid" placeholder="Mật khẩu">
+                        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" id="passwordHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Email: </label>
+                        <input type="email" class="form-control" name="email" id="email" th:field="*{email}" aria-describedby="emailHid" placeholder="Email">
+                        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="emailHid" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="idQuyen">Quyền:</label>
+                        <select class="form-control" name="idQuyen" id="idQuyen" th:field="*{idQuyen}">
+                          <option th:each="item: ${dsquyen}" th:value="${item.idQuyen}" th:text="${item.tenQuyen}" 
+                                  th:select="${item.idQuyen == taikhoan.idQuyen}"> Quyền</option>
+                        </select>
+                         <small th:if="${#fields.hasErrors('idQuyen')}" th:errors="*{idQuyen}" id="quyenHid" class="form-text text-muted"></small>
+                      </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="reset" class="btn btn-secondary"><i class="fas fa-backspace"></i> Đặt lại</button>
+                    <a th:href="@{/admin/dstaikhoan}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> Xem danh sách</a>
+                    <button class="btn btn-primary"><i class="fas fa-save"></i>
+                      <span th:if="${taikhoan.isEdit}"> Cập nhật</span>
+                      <span th:unless="${taikhoan.isEdit}"> Lưu</span>
+                    </button>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </body>
+</html>

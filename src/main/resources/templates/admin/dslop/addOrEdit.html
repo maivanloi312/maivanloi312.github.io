@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/fragments/dashboardLayout.html}">
+    <head>
+
+    </head>
+      <body>
+        <section class="row" layout:fragment="content">
+          <div class="col-6 offset-3 mt-4">
+              <form action="/admin/dslop/saveOrUpdate" method="post" th:object="${lop}">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 th:text="${lop.isEdit? 'Sửa lớp học':'Thêm lớp học'}">Thêm lớp học</h2>
+                  </div>
+                  <div class="card-body">
+                    <input type="hidden" th:field="*{isEdit}">
+                    <div class="form-group">
+                      <label for="idLop">Mã lớp học:</label>
+                      <input type="text" class="form-control" th:field="*{idLop}" aria-describedby="lopHid" placeholder="Mã lớp học">
+                      <small th:errors="*{idLop}" id="lopHid" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="tenLop">Tên lớp học: </label>
+                      <input type="text" class="form-control" id="tenLop" th:field="*{tenLop}" aria-describedby="nameHid" placeholder="Tên lớp học">
+                      <small th:errors="*{tenLop}" id="nameHid" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="khoaHoc">Khóa học: </label>
+                      <input type="text" class="form-control" id="khoaHoc" th:field="*{khoaHoc}" aria-describedby="nameHid" placeholder="Khóa học">
+                      <small th:errors="*{khoaHoc}" id="khoaHocHid" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group">
+                      <label for="idKhoa">Khoa:</label>
+                      <select class="form-control" name="idKhoa" id="idKhoa" th:field="*{idKhoa}">
+                        <option th:each="item: ${dskhoa}" th:value="${item.idKhoa}" th:text="${item.tenKhoa}" 
+                                th:select="${item.idKhoa == lop.idKhoa}"> Tên khoa</option>
+                      </select>
+                      <small th:errors="*{idKhoa}" id="khoaDaoTaoHid" class="form-text text-muted"></small>
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <button type="reset" class="btn btn-secondary"><i class="fas fa-backspace"></i> Đặt lại</button>
+                    <a th:href="@{/admin/dslop}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i> Xem danh sách</a>
+                    <button class="btn btn-primary"><i class="fas fa-save"></i>
+                      <span th:if="${lop.isEdit}"> Cập nhật</span>
+                      <span th:unless="${lop.isEdit}"> Lưu</span>
+                  </button>
+                  </div>
+                </div>
+              </form>
+          </div>
+        </section>
+      </body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="icon" href="https://is4-ssl.mzstatic.com/image/thumb/Purple126/v4/a1/63/20/a1632078-5d4e-f071-b81e-43cc92c902c2/source/256x256bb.jpg" type="image/x-icon"/>
+    <title>Đăng nhập</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/admin.css">
+  </head>
+    <body>
+        <!-- show notification on error -->
+        <div class="col-4 offset-4 mt-4">
+        <!-- login form -->
+        <form name="f" th:action="@{/login}" method="post">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Đăng nhập</h2>
+                </div>
+                <div class="card-body">
+                    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                        Tài khoản hoặc mật khẩu không chính xác
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                        Bạn đã đăng xuất
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Tài khoản</label>
+                        <input type="text" class="form-control" name="username" id="username" aria-describedby="usernameHid" placeholder="Tên đăng nhập" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" class="form-control" name="password" id="password" aria-describedby="passwordHid" placeholder="Mật khẩu" required>  
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="remember-me" id="remember-me">Nhớ mật khẩu
+                        </label>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-primary"> Đăng nhập</button>
+                    <!-- <p class="float-right mt-1">Chưa có tài khoản? <a th:href="@{/registration}">Đăng kí ngay</a></p> -->
+                </div>
+            </div>
+            </form>
+        </div>
+    </body>
+</html>
